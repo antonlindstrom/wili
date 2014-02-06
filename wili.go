@@ -15,8 +15,6 @@ import (
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/build", buildHandler).Methods("POST")
-	r.HandleFunc("/{id:[0-9]+}/log", logHandler).Methods("GET")
-	r.HandleFunc("/{id:[0-9]+}/run", runHandler).Methods("GET")
 	http.Handle("/", r)
 
 	log.Printf("Starting on port 8080\n")
@@ -73,22 +71,6 @@ func build(w http.ResponseWriter) {
 		fmt.Fprintf(w, "- %s\n", line)
 	}
 	cmd.Wait()
-}
-
-// DEPRECATED - Follow the log of a build
-func logHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
-
-	fmt.Fprintf(w, "Hello %s\n", id)
-}
-
-// DEPRECATED - Start the container
-func runHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
-
-	fmt.Fprintf(w, "Not implemented - %s\n", id)
 }
 
 // Read multipart
