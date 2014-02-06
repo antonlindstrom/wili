@@ -1,0 +1,3 @@
+#!/bin/sh
+printf '%s\n' "You've successfully authenticated as $USER."
+exit 128
