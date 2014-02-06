@@ -12,7 +12,7 @@ RUN mkdir /home/git/.ssh
 RUN mkdir /home/git/git-shell-commands
 RUN mkdir /var/run/sshd
 
-ADD no-interactive-login /home/git/git-shell-commands/no-interactive-login
+ADD files/no-interactive-login /home/git/git-shell-commands/no-interactive-login
 RUN chmod +x /home/git/git-shell-commands/no-interactive-login
 
 ADD sshkey.pub /home/git/.ssh/authorized_keys
@@ -20,7 +20,7 @@ ADD sshkey.pub /home/git/.ssh/authorized_keys
 RUN chown -R git:git /home/git
 
 RUN git init --bare /build.git
-ADD post-receive-hook /build.git/hooks/post-receive
+ADD files/post-receive-hook /build.git/hooks/post-receive
 RUN chmod +x /build.git/hooks/post-receive
 
 RUN chown -R git:git /build.git
