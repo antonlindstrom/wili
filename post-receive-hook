@@ -4,22 +4,16 @@ BUILDER=http://172.17.42.1:8080
 
 echo
 echo
-echo "Compiling slug.."
+echo "Compiling slug"
 git archive --format=tar.gz HEAD -o /tmp/build.tar.gz
 
-echo "Sending to builder.."
-BUILD_ID=$(curl -sf -X POST --data-binary "@/tmp/build.tar.gz" ${BUILDER}/build)
+echo "Sending to builder"
+curl -sf -X POST --form file="@/tmp/build.tar.gz" ${BUILDER}/build
 
 if [ $? != 0 ]; then
   echo "Failed to send to builder, ${BUILDER}"
   exit 128
 fi
-
-echo "Attaching to build log.."
-curl ${BUILDER}/${BUILD_ID}/log
-
-echo "Starting up.."
-curl ${BUILDER}/${BUILD_ID}/run
 
 echo
 echo
